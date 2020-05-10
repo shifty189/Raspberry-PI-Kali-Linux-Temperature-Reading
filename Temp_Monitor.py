@@ -19,7 +19,7 @@ for a in args:
 		celc = True
 	if a == "-f":
 		fare = True
-	if a == "-h":
+	if a == "-h" or a == "--help":
 		print("only 3 flags -c for celcieus, -f for ferenhight, and -k to continusly run")
 		exit()
 	if a == "-k":
