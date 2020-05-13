@@ -13,7 +13,6 @@ minF = 1000
 
 
 args = sys.argv
-#print(len(args)) 
 for a in args:
 	if a == "-c":
 		celc = True
@@ -26,11 +25,13 @@ for a in args:
 		keep_running = True
 while True:
 	os.system('clear')
+	#this temp file is where the RPI stores its internal CPU sensor reading
 	file = open("/sys/class/thermal/thermal_zone0/temp", "r")
 
 	raw = int(file.readline())
 	file.close()
-
+	
+	#convert the raw data to celsius
 	cel = raw/1000
 	far = (cel * 1.8) + 32
 
@@ -63,8 +64,10 @@ while True:
 		print("\nColdest recorded temp is " + str(minC) + "'C")
 	if overheat > 0:
 		print("\nCPU has gone over 80'C " + str(overheat) + " times!")
+	#if -k was not specified, exit after taking a single reading
 	if keep_running == False:
 		exit()
 	else:
 		print("\nPress Ctrl + C to quit")
+	#set the system to pause for 1 second
 	time.sleep(1)
