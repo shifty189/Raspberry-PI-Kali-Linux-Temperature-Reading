@@ -10,9 +10,12 @@ maxC = 0
 minC = 1000
 maxF = 0
 minF = 1000
+ticks = 0
+counter = 0
 
 
 args = sys.argv
+#print(len(args)) 
 for a in args:
 	if a == "-c":
 		celc = True
@@ -25,15 +28,16 @@ for a in args:
 		keep_running = True
 while True:
 	os.system('clear')
-	#this temp file is where the RPI stores its internal CPU sensor reading
 	file = open("/sys/class/thermal/thermal_zone0/temp", "r")
 
 	raw = int(file.readline())
 	file.close()
-	
-	#convert the raw data to celsius
+
 	cel = raw/1000
 	far = (cel * 1.8) + 32
+
+	counter += cel
+	ticks += 1
 
 	if cel > maxC:
 		maxC = cel
@@ -49,25 +53,30 @@ while True:
 
 	if celc == False and fare == False:
 		print(str(cel) + "C" " or " + str(far) + "F")
-		print("\nHottest recorded temp is " + str(maxC) + "'C or " + str(maxF) + "'F")
-		print("\nColdest recorded temp is " + str(minC) + "'C or " + str(minF) + "'F")
+		if keep_running:
+			print("\nHottest recorded temp is " + str(maxC) + "'C or " + str(maxF) + "'F")
+			print("\nColdest recorded temp is " + str(minC) + "'C or " + str(minF) + "'F")
+			print(" ")
+			print("Average: " + str(counter/ticks) + "C or " + str(((counter/ticks) * 1.8) + 32) + "F")
 	elif celc and fare:
 		print("only pick -c or -f")
 		exit()
 	elif fare:
 		print(str(far) + " F'")
-		print("\nHottest recorded temp is " + str(maxF) + "'F")
-		print("\nColdest recorded temp is " + str(minF) + "'F")
+		if keep_running:
+			print("\nHottest recorded temp is " + str(maxF) + "'F")
+			print("\nColdest recorded temp is " + str(minF) + "'F")
+			print("Average: "  + str(((counter/ticks) * 1.8) + 32) + "F")
 	elif celc:
 		print(str(cel) + "C") 
-		print("\nHottest recorded temp is " + str(maxC) + "'C")
-		print("\nColdest recorded temp is " + str(minC) + "'C")
+		if keep_running:
+			print("\nHottest recorded temp is " + str(maxC) + "'C")
+			print("\nColdest recorded temp is " + str(minC) + "'C")
+			print("Average: " + str(counter/ticks) + "C")
 	if overheat > 0:
 		print("\nCPU has gone over 80'C " + str(overheat) + " times!")
-	#if -k was not specified, exit after taking a single reading
 	if keep_running == False:
 		exit()
 	else:
 		print("\nPress Ctrl + C to quit")
-	#set the system to pause for 1 second
 	time.sleep(1)
