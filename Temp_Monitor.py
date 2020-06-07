@@ -56,8 +56,7 @@ while True:
 		if keep_running:
 			print("\nHottest recorded temp is " + str(maxC) + "'C or " + str(maxF) + "'F")
 			print("\nColdest recorded temp is " + str(minC) + "'C or " + str(minF) + "'F")
-			print(" ")
-			print("Average: " + str(counter/ticks) + "C or " + str(((counter/ticks) * 1.8) + 32) + "F")
+			print("\nAverage: " + str(counter/ticks) + "C or " + str(((counter/ticks) * 1.8) + 32) + "F")
 	elif celc and fare:
 		print("only pick -c or -f")
 		exit()
