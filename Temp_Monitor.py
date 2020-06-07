@@ -28,6 +28,7 @@ for a in args:
 		keep_running = True
 while True:
 	os.system('clear')
+	#this temp file is where the RPI stores its internal CPU sensor reading
 	file = open("/sys/class/thermal/thermal_zone0/temp", "r")
 
 	raw = int(file.readline())
