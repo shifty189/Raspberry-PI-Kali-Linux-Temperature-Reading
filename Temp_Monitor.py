@@ -26,13 +26,12 @@ for index, a in enumerate(args):
 		print("-c	for celcieus")
 		print("-f	for ferenhight")
 		print("-k	to continusly run")
-		print("-t	designate how hot should be considered overheating")
-		#print("only 3 flags -c for celcieus, -f for ferenhight, and -k to continusly run")
+		print("-t	designate in celcieus how hot should be considered overheating")
 		exit()
 	if a == "-k":
 		keep_running = True
 	if a == "-t":
-		overheat_temp = args[index + 1]
+		overheat_temp = int(args[index + 1])
 while True:
 	os.system('clear')
 	#this temp file is where the RPI stores its internal CPU sensor reading
@@ -56,7 +55,7 @@ while True:
 	if far < minF:
 		minF = far
 
-	if cel > 80:
+	if cel > overheat_temp:
 		overheat += 1
 
 	if celc == False and fare == False:
