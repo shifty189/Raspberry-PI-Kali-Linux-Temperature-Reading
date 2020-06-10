@@ -12,20 +12,27 @@ maxF = 0
 minF = 1000
 ticks = 0
 counter = 0
+overheat_temp = 80
 
 
 args = sys.argv
-#print(len(args)) 
-for a in args:
+
+for index, a in enumerate(args):
 	if a == "-c":
 		celc = True
 	if a == "-f":
 		fare = True
 	if a == "-h" or a == "--help":
-		print("only 3 flags -c for celcieus, -f for ferenhight, and -k to continusly run")
+		print("-c	for celcieus")
+		print("-f	for ferenhight")
+		print("-k	to continusly run")
+		print("-t	designate how hot should be considered overheating")
+		#print("only 3 flags -c for celcieus, -f for ferenhight, and -k to continusly run")
 		exit()
 	if a == "-k":
 		keep_running = True
+	if a == "-t":
+		overheat_temp = args[index + 1]
 while True:
 	os.system('clear')
 	#this temp file is where the RPI stores its internal CPU sensor reading
@@ -74,7 +81,7 @@ while True:
 			print("\nColdest recorded temp is " + str(minC) + "'C")
 			print("Average: " + str(counter/ticks) + "C")
 	if overheat > 0:
-		print("\nCPU has gone over 80'C " + str(overheat) + " times!")
+		print("\nCPU has gone over " + str(overheat_temp) + "'C " + str(overheat) + " times!")
 	if keep_running == False:
 		exit()
 	else:
