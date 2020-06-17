@@ -9,3 +9,5 @@ This script also work son Lakka for Raspberry Pi. I suspect that this will work 
 -f  Display temperature in only fahrenheit
 
 -k  Continuously display the temperature every second and keep track of max and min temperature
+
+-s  Determine in seconds how often to check temperature. Default is one a second
