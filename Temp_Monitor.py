@@ -43,7 +43,10 @@ for index, a in enumerate(args):
 		if sec < 1:
 			print("Must take at leaste one reading a second")
 			exit()
-		sec = int(args[index + 1])
+		try:
+			sec = int(args[index + 1])
+		except ValueError:
+			print("-s requires an Int (Hole Number)")
 		
 while True:
 	os.system('clear')
