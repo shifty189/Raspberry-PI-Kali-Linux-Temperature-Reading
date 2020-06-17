@@ -47,6 +47,7 @@ for index, a in enumerate(args):
 			sec = int(args[index + 1])
 		except ValueError:
 			print("-s requires an Int (Hole Number)")
+			exit()
 		
 while True:
 	os.system('clear')
